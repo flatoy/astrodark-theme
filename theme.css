@@ -1,34 +1,175 @@
 body {
-	--radius-s: 0px;
-	--radius-m: 0px;
-	--radius-l: 0px;
-	--input-radius: 0px;
-	--tab-radius-active: 0px;
-	--checkbox-radius: 0px;
-	--toggle-radius: 0px;
-	--toggle-thumb-radius: 0px;
-	--slider-thumb-radius: 0px;
+	--radius-s: 4px;
+	--radius-m: 8px;
+	--radius-l: 12px;
+	--input-radius: 4px;
+    /* Typography */
+    --font-interface: 'Iosevka Nerd Font', monospace;
+    --font-text: 'Iosevka Nerd Font', monospace;
+    --font-monospace: 'Iosevka Nerd Font', monospace;
 }
 
-.workspace-tab-header.is-active::before, .workspace-tab-header.is-active::after {
-	display: none;
+.theme-dark {
+    /* --- CORE PALETTE (One Dark Pro Inspired) --- */
+    --bg1: #282c34; /* Main Editor */
+    --bg2: #21252b; /* Sidebar / Gutters */
+    --bg3: #181a1f; /* Darker Borders */
+    
+    --fg: #E6E6E6; /* Main Text - Bright Light Grey */
+    --fg-muted: #ABB2BF; /* Muted Text */
+    
+    --red: #E06C75;
+    --orange: #D19A66;
+    --yellow: #E5C07B;
+    --green: #98C379;
+    --cyan: #56B6C2;
+    --blue: #61AFEF;
+    --purple: #C678DD;
+    --pink: #FF79C6; /* More vibrant pink for folders */
+
+    /* Obsidian Mappings */
+    --background-primary: var(--bg1);
+    --background-primary-alt: var(--bg2);
+    --background-secondary: var(--bg2);
+    --background-secondary-alt: var(--bg3);
+    --background-modifier-border: var(--bg3);
+
+    --text-normal: var(--fg);
+    --text-muted: var(--fg-muted);
+    --text-accent: var(--blue);
+    --text-selection: #3E4451;
+    
+    --interactive-accent: var(--blue);
+    
+    /* --- MARKDOWN EDITOR SYNTAX --- */
+    --code-normal: var(--fg);
+    --code-comment: #5C6370;
+    --code-tag: var(--red);
+    --code-value: var(--orange);
+    --code-string: var(--green);
+    --code-keyword: var(--purple);
+    --code-function: var(--blue);
+    --code-variable: var(--yellow);
 }
 
-svg * {
-	stroke-linecap: square;
-	stroke-linejoin: miter;
-	rx: 0;
-	ry: 0;
+/* --- TYPOGRAPHY & HEADINGS --- */
+/* Editor Headings */
+.cm-header-1, .markdown-preview-view h1 { color: var(--red) !important; }
+.cm-header-2, .markdown-preview-view h2 { color: var(--orange) !important; }
+.cm-header-3, .markdown-preview-view h3 { color: var(--yellow) !important; }
+.cm-header-4, .markdown-preview-view h4 { color: var(--green) !important; }
+.cm-header-5, .markdown-preview-view h5 { color: var(--blue) !important; }
+.cm-header-6, .markdown-preview-view h6 { color: var(--purple) !important; }
+
+/* Markdown Formatting (The "Jazz") */
+.cm-strong { color: var(--orange); font-weight: bold; }
+.cm-em { color: var(--purple); font-style: italic; }
+.cm-formatting-list { color: var(--cyan); }
+.cm-list-1 { color: var(--fg); }
+.cm-link, .cm-url { color: var(--blue); text-decoration: underline; }
+.cm-quote { color: var(--green); font-style: italic; }
+
+/* --- SIDEBAR & FILE EXPLORER --- */
+/* Hide Default Chevrons/Arrows */
+.nav-folder-collapse-indicator {
+    display: none !important;
 }
 
-.menu {
-	padding: var(--size-2-1);
+/* Folders: Default (Closed) -> Blue */
+.nav-folder-title::before {
+    content: "\f07b"; /* fa-folder */
+    font-family: "Iosevka Nerd Font", monospace;
+    color: var(--blue);
+    margin-right: 8px;
+    font-size: 14px;
+    display: inline-block;
+    width: 16px;
+    text-align: center;
 }
 
-.menu-item {
-	padding: var(--size-4-1) var(--size-4-2);
+/* Folders: Open -> Pink */
+.nav-folder:not(.is-collapsed) > .nav-folder-title::before {
+    content: "\f07c"; /* fa-folder-open */
+    color: var(--pink);
 }
 
-.menu-separator {
-	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
+/* Canvas Files -> Yellow Icon */
+.nav-file-title[data-path$=".canvas"]::before {
+    content: "\f1c5"; /* fa-file-image */
+    font-family: "Iosevka Nerd Font", monospace;
+    color: var(--yellow);
+    margin-right: 8px;
+    font-size: 14px;
+    display: inline-block;
+    width: 16px;
+}
+
+/* Standard Files -> Muted Icon (Optional, for alignment) */
+.nav-file-title:not([data-path$=".canvas"])::before {
+    content: "\f15b"; /* fa-file */
+    font-family: "Iosevka Nerd Font", monospace;
+    color: var(--text-muted);
+    margin-right: 8px;
+    font-size: 14px;
+    display: inline-block;
+    width: 16px;
+}
+
+/* Hover Effects in Sidebar */
+.nav-file-title:hover, .nav-folder-title:hover {
+    background-color: #2C313A;
+    color: var(--fg);
+}
+
+/* --- CHECKBOXES --- */
+input[type="checkbox"], .task-list-item-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--text-muted);
+    border-radius: 4px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    margin-right: 6px;
+}
+
+input[type="checkbox"]:checked, .task-list-item-checkbox:checked {
+    background-color: var(--green);
+    border-color: var(--green);
+}
+
+/* Checkmark */
+input[type="checkbox"]:checked::after, .task-list-item-checkbox:checked::after {
+    content: "✔";
+    font-size: 12px;
+    color: #1E222A;
+    position: absolute;
+    top: -1px;
+    left: 2px;
+    font-weight: bold;
+}
+
+/* --- UI POLISH --- */
+/* Line Numbers */
+.cm-gutters {
+    background-color: var(--bg2);
+    color: #4B5263;
+    border-right: 1px solid var(--bg3);
+}
+.cm-active.cm-line { background-color: #2C313A; }
+
+/* Status Bar */
+.status-bar {
+    background-color: var(--bg3);
+    border-top: 1px solid #3E4451;
+    color: var(--text-muted);
+}
+
+/* Active Tab */
+.workspace-tab-header.is-active {
+    background-color: var(--bg1);
+    color: var(--blue);
+    border-top: 2px solid var(--blue);
 }
