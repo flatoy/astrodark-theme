@@ -2,6 +2,8 @@
 
 Astrodark is a dark theme for Obsidian, inspired by the [Astronvim](https://astronvim.com/) dark theme/One Dark Pro. It aims to provide a clean, high-contrast coding and writing environment with a modern aesthetic.
 
+<img width="1115" height="778" alt="Screenshot 2025-11-21 at 12 53 54" src="https://github.com/user-attachments/assets/5dc190fc-192f-4c59-aee8-12f3646781b1" />
+
 ## Fonts
 
 This theme uses **Iosevka Nerd Font** for all text elements, providing a consistent monospace look throughout the interface.
